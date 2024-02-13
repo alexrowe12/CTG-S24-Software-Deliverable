@@ -9,17 +9,11 @@ with open("tickers.txt", "r") as tickerListReader:
     for i in tickerListReader:
         tickerList.append(i)
 
-# Creates a new csv file for each ticker in the tickerList, and writes data to it
+# Iterates for each ticker, takes historial data, and uses .to_csv method to write to CSV
 for ticker in tickerList:
-
     tickerName = (str(ticker))[2:-2]
-    currTickerObj = yf.Ticker(tickerName)
-
-    # Writes to a new CSV file named after the ticker
-    with open(("task_1/data/" + tickerName + ".csv"), "w", newline='') as csvFile:
-        csvWriter = csv.writer(csvFile)
-
-        data = yf.download(ticker)
-
-        csvWriter.writerow(data)
+    filePath = "task_1/data/" + tickerName + ".csv"
+    tickerObj = yf.Ticker(tickerName)
+    data = tickerObj.history(start="2022-01-01", end="2023-12-31", interval="1d", actions=False)
+    data.to_csv(filePath)
 
