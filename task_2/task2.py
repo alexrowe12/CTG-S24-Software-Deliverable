@@ -9,7 +9,15 @@ with open("tickers.txt", "r") as tickerListReader:
         tickerList.append(i)
 
 # Factor 1: Price Momentum
+
+# Writing first line
+tickerRow = ','.join([ticker[0] for ticker in tickerList])
+tickerRow = "Date," + tickerRow
+with open("task_2/priceMomentum.csv", "w", newline='') as pmFile:
+    pmFile.write(tickerRow)
+
 for ticker in tickerList:
+    tickerNum = 0
     pastPrices = []
     pm = 0
     pmList = []
@@ -32,8 +40,3 @@ for ticker in tickerList:
                 pm = round(float(((pastPrices[4] - pastPrices[0]) / pastPrices[0]) * 100))
                 pmList.append(pm)
 
-    print(tickerName + ": " + str(pastPrices))
-    print(tickerName + ": " + str(pmList))
-
-
-            
