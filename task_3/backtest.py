@@ -30,7 +30,11 @@ class BacktestStrategy:
     def _ticker_return(self, ticker, date):
         # Calculate return for a single ticker
         try:
+            # Shifts date back using Timedelta for -1 days
+            prevDate = pd.to_datetime(date) - pd.Timedelta(days=1)
+            prevDate = prevDate.strftime('%Y-%m-%d')
             daily_data = self.data[ticker].loc[date]
+            # print (prevDate)
             return daily_data['Close'] / daily_data['Open'] - 1
         except KeyError:
             return 0  # Return zero if data is missing
